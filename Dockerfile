@@ -41,6 +41,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next         ./.next
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules  ./node_modules
 COPY --from=builder --chown=nextjs:nodejs /app/package.json  ./package.json
 COPY --from=builder --chown=nextjs:nodejs /app/next.config.js ./next.config.js
+# next.config.js imports src/env.js at startup — copy it into the runner
+COPY --from=builder --chown=nextjs:nodejs /app/src/env.js   ./src/env.js
 
 USER nextjs
 EXPOSE 3000
